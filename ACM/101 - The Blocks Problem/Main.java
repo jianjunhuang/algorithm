@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 public class Main{
+
 	private int[][] form;
+	//存储行的位置
 	private int[] arr;
 	public static void main(String args[]) throws IOException{
 		Main m = new Main();
@@ -27,6 +29,9 @@ public class Main{
 			com2 = tokens.nextToken();
 			//get second block number
 			pos2 = Integer.parseInt(tokens.nextToken());
+			if(m.check(pos1,pos2)){
+				continue;
+			}
 			if("move".equals(com1)){
 				if("onto".equals(com2)){
 					m.moveOnto(pos1,pos2);
@@ -59,9 +64,6 @@ public class Main{
 	}
 
 	public void moveOnto(int a , int b){
-		if(check(a,b)){
-			return;
-		}
 		clear(a);
 		clear(b);
 		int rowA = arr[a];
@@ -74,9 +76,6 @@ public class Main{
 	}
 
 	public void moveOver(int a , int b){
-		if(check(a,b)){
-			return;
-		}
 		clear(a);
 		int rowA = arr[a];
 		int rowB = arr[b];
@@ -88,9 +87,6 @@ public class Main{
 	}
 
 	public void pileOnto(int a , int b){
-		if(check(a,b)){
-			return;
-		}
 		clear(b);
 		int rowA = arr[a];
 		int rowB = arr[b];
@@ -104,9 +100,6 @@ public class Main{
 	}
 
 	public void pileOver(int a , int b){
-		if(check(a,b)){
-			return;
-		}
 		int rowA = arr[a];
 		int rowB = arr[b];
 		int coloA = find(a);
@@ -119,22 +112,22 @@ public class Main{
 	}
 
 	public int getHight(int var){
-		int hight;
-		for(hight = 0 ; form[var][hight] != -1 ; hight++){
-
+		int hight = 0;
+		while( form[var][hight] != -1){
+			hight++;
 		}
 		return hight-1;
 	}
 
 	public void clear(int var){
 		int row = arr[var];
-		int position = find(row);
+		int position = find(var);
 		int num;
 		int hight;
-		for(int i = position+1 ; form[row][i] > 0 ; i++){
+		for(int i = position+1 ; form[row][i] >= 0 ; i++){
 			num = form[row][i];
 			hight = getHight(num);
-			for(int j = hight+1 ; j > 1 ; j--){
+			for(int j = hight ; j > 0 ; j--){
 				form[num][j+1] = form[num][j];
 			}
 			form[num][0] = num;
