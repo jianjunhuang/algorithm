@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 public class Main{
 
 	private int[][] form;
-	//存储行的位置
+	
 	private int[] arr;
 	public static void main(String args[]) throws IOException{
 		Main m = new Main();
@@ -61,6 +61,9 @@ public class Main{
 				}
 			}
 		}
+		for(int i  = 0 ; i < n ; i++){
+			arr[i] = i;
+		}
 	}
 
 	public void moveOnto(int a , int b){
@@ -81,7 +84,7 @@ public class Main{
 		int rowB = arr[b];
 		int coloB = getHight(rowB);
 		int coloA = find(a);
-		form[rowB][coloB+1] = a;
+		form[rowB][coloB] = a;
 		form[rowA][coloA] = -1;
 		arr[a] = rowB;
 	}
@@ -92,10 +95,12 @@ public class Main{
 		int rowB = arr[b];
 		int coloA = find(a);
 		int coloB = find(b);
-		for(int i = coloA , j = coloB + 1; form[rowA][i] > 0 ; i++ , j++){
+
+		for(int i = coloA , j = coloB + 1; form[rowA][i] >= 0 && i < arr.length ; i++ , j++){
 			form[rowB][j] = form[rowA][i];
 			form[rowA][i] = -1;
 			arr[form[rowA][i]] = rowB;
+
 		}
 	}
 
@@ -104,27 +109,30 @@ public class Main{
 		int rowB = arr[b];
 		int coloA = find(a);
 		int coloB = getHight(rowB);
-		for(int i = coloA , j = coloB + 1; form[rowA][i] > 0 ; i++ , j++){
+		for(int i = coloA , j = coloB ; form[rowA][i] >= 0 && i < arr.length ; i++ , j++){
 			form[rowB][j] = form[rowA][i];
-			form[rowA][i] = -1;
 			arr[form[rowA][i]] = rowB;
+			form[rowA][i] = -1;
 		}
 	}
 
-	public int getHight(int var){
+	public int getHight(int row){
 		int hight = 0;
-		while( form[var][hight] != -1){
+		while(form[row][hight] != -1 && hight < arr.length){
 			hight++;
 		}
-		return hight-1;
+		return hight;
 	}
 
 	public void clear(int var){
+
 		int row = arr[var];
+	
 		int position = find(var);
+
 		int num;
 		int hight;
-		for(int i = position+1 ; form[row][i] >= 0 ; i++){
+		for(int i = position+1 ; form[row][i] >= 0 && i < arr.length ; i++){
 			num = form[row][i];
 			hight = getHight(num);
 			for(int j = hight ; j > 0 ; j--){
@@ -138,7 +146,7 @@ public class Main{
 	public int find(int var){
 		int row = arr[var];
 		int position = -1;
-		for(int i = 0 ; form[row][i] >= 0 ; i++){
+		for(int i = 0 ; form[row][i] >= 0 && i < arr.length ; i++){
 			if(form[row][i] == var){
 				position = i;
 				break;
@@ -157,8 +165,8 @@ public class Main{
 	public void quit(int num){
 		for(int i = 0 ; i < num ; i++){
 			System.out.print(i+":");
-			for(int j = 0 ; form[i][j] >= 0 ; j++){
-				System.out.print(form[i][j]+" ");
+			for(int j = 0 ; j < num && form[i][j] >= 0; j++){
+				System.out.print(" "+form[i][j]);
 			}
 			System.out.println();
 		}
