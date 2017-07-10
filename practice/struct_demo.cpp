@@ -1,6 +1,7 @@
+#include "template_demo.h"
 #include <iostream>
 using namespace std;
-
+/*
 struct Point {
   int x, y;
   //构造函数
@@ -20,10 +21,13 @@ ostream &operator<<(ostream &out, const Point &p) {
   out << "(" << p.x << "," << p.y << ")";
   return out;
 }
-
+*/
 int main() {
-  point a, b(1, 2);
-  a.x = 3;
-  cout << a + b << "\n";
+  /*
+  double a[] = {1.1, 2.2, 3.3, 4.4};
+  cout << sum(a, a + 4);
+  Point b[] = {Point(1, 2), Point(3, 4), Point(5, 6), Point(7, 8)};
+  cout << sum(b, b + 4) << endl;
+  */
   return 0;
 }
