@@ -1,3 +1,7 @@
+/**
+ * TODO
+ * the best solutions is use segment tree.
+ */
 class NumArray {
 
     private int[] nums;
