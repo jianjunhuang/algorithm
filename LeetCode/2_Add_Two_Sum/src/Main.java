@@ -1,3 +1,6 @@
+/**
+ * 27ms
+ */
 public class Main {
     public static void main(String args[]) {
         ListNode l1 = new ListNode(2);
