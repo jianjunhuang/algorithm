@@ -1,21 +1,13 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 27ms
  */
 public class Main {
     public static void main(String args[]) {
-        ListNode l1 = new ListNode(2);
-        l1.next = new ListNode(4);
-        l1.next.next = new ListNode(3);
-
-        ListNode l2 = new ListNode(5);
-        l2.next = new ListNode(6);
-        l2.next.next = new ListNode(4);
-
-        ListNode node = addTwoNumbers(l1, l2);
-        while (node != null) {
-            System.out.println(node.val);
-            node = node.next;
-        }
+       System.out.println(new Solution().threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
     }
 
     /**
@@ -102,4 +94,38 @@ public class Main {
         }
     }
 
+    static class Solution {
+        public List<List<Integer>> threeSum(int[] nums) {
+            List<List<Integer>> res = new ArrayList();
+            if (nums == null || nums.length == 0) {
+                return res;
+            }
+            Arrays.sort(nums);
+
+            for (int i = 0; i < nums.length; i++) {
+                int l = i+1, r = nums.length - 1;
+                if (i > 0 && nums[i] == nums[i-1]) continue;
+                int tar = nums[i];
+                while (l < r) {
+                    int tmp = nums[l] + nums[r];
+                    if (tar + tmp == 0) {
+                        List<Integer> list = new ArrayList();
+                        list.add(nums[i]);
+                        list.add(nums[l]);
+                        list.add(nums[r]);
+                        res.add(list);
+                        while (l < r && nums[l] == nums[l + 1]) l++;
+                        while (l < r && nums[r] == nums[r - 1]) r--;
+                        l++;
+                        r--;
+                    } else if (tar + tmp < 0) {
+                        l++;
+                    } else {
+                        r--;
+                    }
+                }
+            }
+            return res;
+        }
+    }
 }
