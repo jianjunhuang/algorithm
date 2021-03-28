@@ -4,3 +4,7 @@
 *.class
 /out
 *.exe
+.DS_Store
+/*.exe
+*.jar
+/lib
